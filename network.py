@@ -223,7 +223,7 @@ steps=[]
 res=[]
 flags=[]
 
-for sol in range(50):
+for sol in range(50):#Прогон решалы на 50 картах для примера
     print(f"Learning number {sol}")
     grid = looker.get_random_map("small", True)
     done = 0
@@ -257,17 +257,17 @@ for sol in range(50):
             optimize_model()
 
 
-try:
+try:#Обучение сети
     ref=[]
     for i_episode in count():
         acts=[]
         # Initialize the environment and get its state
 
-        if i_episode==0:
+        if i_episode==0:#выбор новой карты
             ref=[]
             grid=looker.get_random_map("small",True)
             done=0
-            while done == 0:
+            while done == 0:#генерация эталонного маршрута
                 actions = solver.get_route_solver(grid)
 
                 if not actions:
@@ -310,7 +310,7 @@ try:
 
 
             acts.append(action)
-            if len(acts)>=3 and acts[-1]==acts[-2] and acts[-2]==acts[-3]:
+            if len(acts)>=3 and acts[-1]==acts[-2] and acts[-2]==acts[-3]:#Наказание за повторение ходов 3 и более раза
                 i=-1
                 while abs(i)<len(acts) and acts[i]==acts[-1]:
                     i-=1
@@ -320,7 +320,7 @@ try:
                 #     reward=-10
                 #     done = -2
             rew += reward
-            if ref.count(action) and acts.count(action)<=ref.count(action):
+            if ref.count(action) and acts.count(action)<=ref.count(action):#Награда за соответвие с эталонным
                 reward+=100
             else:
                 reward-=10
