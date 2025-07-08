@@ -477,7 +477,7 @@ class Grid:
         m = self.ysize * self.xsize
         return random.randint(0,m-1)
 
-    def step(self,action):
+    def step(self,action):#Функция награды
         self.last_action=action
         command = self.deint_action(action).split()
         x = int(command[0 + (command[0] == "f")])
